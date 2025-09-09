@@ -15,7 +15,7 @@ export default function HomePage() {
           <div className="w-1/2 relative order-2 md:order-1 h-full">
             <div className="absolute inset-0">
               <Image
-                src="/images/sets2.jpg"
+                src="/images/Sets2.jpg"
                 alt="Elegant woman with jewelry"
                 fill
                 className="object-cover object-center"

@@ -18,7 +18,7 @@ export default function GiftGuides() {
         {/* Arch Frame */}
         <div className="relative w-[320px] h-[420px] md:w-[380px] md:h-[500px] rounded-t-[200px] border-[2px] overflow-hidden">
           <Image
-            src="/images/sets14.jpg"
+            src="/images/Sets14.jpg"
             alt="Gift Guide"
             fill
             className="object-cover"

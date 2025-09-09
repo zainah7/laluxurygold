@@ -49,7 +49,7 @@ export default function FineJewelry() {
         {/* Arch Container */}
         <div className="relative w-[320px] h-[420px] md:w-[380px] md:h-[500px] rounded-t-[200px] overflow-hidden border-2 border-white">
           <Image
-            src="/images/sets7.jpg"
+            src="/images/Sets7.jpg"
             alt="Fine Jewelry"
             fill
             className="object-cover"
