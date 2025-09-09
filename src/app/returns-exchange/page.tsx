@@ -1,6 +1,6 @@
 "use client";
 
-import { RotateCcw, Shield, Clock, CheckCircle, XCircle, Mail, Phone, MessageCircle } from "lucide-react";
+import { RotateCcw, Clock, CheckCircle, XCircle, Mail, Phone, MessageCircle } from "lucide-react";
 import Header from "@/components/Header";
 
 export default function ReturnsExchangePage() {

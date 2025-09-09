@@ -1,6 +1,6 @@
 "use client";
 
-import { Shield, Star, Wrench, Clock, CheckCircle, XCircle, Mail, Phone, MessageCircle, Sparkles } from "lucide-react";
+import { Shield, Star, Wrench, Clock, CheckCircle, Mail, Phone, MessageCircle, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
 import Header from "@/components/Header";
 
