@@ -203,7 +203,7 @@ export default function FAQPage() {
                 className="bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200 rounded-2xl p-6 hover:shadow-lg transition-shadow"
                 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
               >
-                <h3 className="font-bold text-lg mb-2 text-blue-900">What's your return policy?</h3>
+                <h3 className="font-bold text-lg mb-2 text-blue-900">What&apos;s your return policy?</h3>
                 <p className="text-gray-700">30-day returns on unworn items in original condition and packaging.</p>
               </motion.div>
               <motion.div 

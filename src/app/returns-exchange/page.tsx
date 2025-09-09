@@ -135,7 +135,7 @@ export default function ReturnsExchangePage() {
                     <div className="absolute -top-2 -right-2 w-6 h-6 bg-emerald-200 rounded-full animate-pulse"></div>
                   </div>
                   <h3 className="text-xl font-bold mb-3">Contact Us</h3>
-                  <p className="text-gray-600 leading-relaxed">Email us with your order number and reason for exchange. We'll guide you through the process.</p>
+                  <p className="text-gray-600 leading-relaxed">Email us with your order number and reason for exchange. We&apos;ll guide you through the process.</p>
                 </div>
                 
                 <div className="text-center group">

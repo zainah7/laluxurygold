@@ -167,7 +167,7 @@ export default function WarrantyPage() {
 
           {/* What's Not Covered */}
           <section className="mb-12">
-            <h2 className="text-2xl font-serif mb-6">What's Not Covered</h2>
+            <h2 className="text-2xl font-serif mb-6">What&apos;s Not Covered</h2>
             <div className="bg-red-50 border border-red-200 rounded-lg p-6">
               <ul className="space-y-2 text-gray-700">
                 <li>• Normal wear and tear</li>
