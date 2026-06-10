@@ -1,70 +1,80 @@
 "use client";
 
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
+import Link from "next/link";
 import { motion } from "./AnimationProvider";
 
 export default function FineJewelry() {
   return (
     <motion.section
-      initial={{ opacity: 0, y: 40 }}
+      initial={{ opacity: 0, y: 36 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className="bg-[#003524] text-white py-20 px-6 md:px-20 grid grid-cols-1 md:grid-cols-2 gap-10 items-center"
+      className="bg-luxury-black px-4 py-16 text-white md:py-24"
     >
-      {/* Left: Text */}
-      <div>
-        {/* Icon */}
-        <div className="mb-2">
-          <Image
-            src="/images/earrings.svg"
-            alt="Ring Icon"
-            width={30}
-            height={30}
-            className="filter brightness-0 invert"
-          />
+      <div className="container mx-auto grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+        <div className="grid grid-cols-2 gap-4">
+          <div className="relative h-[430px] overflow-hidden border border-luxury-gold/30">
+            <Image
+              src="/images/Sets7.jpg"
+              alt="Fine gold jewelry set"
+              fill
+              className="object-cover"
+            />
+          </div>
+          <div className="grid gap-4">
+            <div className="relative h-[205px] overflow-hidden border border-luxury-gold/30">
+              <Image
+                src="/images/earrings2.png"
+                alt="Gold earrings"
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="relative h-[205px] overflow-hidden border border-luxury-gold/30">
+              <Image
+                src="/images/Wristwatch2.jpg"
+                alt="Luxury gold wristwatch"
+                fill
+                className="object-cover"
+              />
+            </div>
+          </div>
         </div>
 
-        <p className="text-sm text-gray-300 font-semibold mb-1">
-          Basic And Exquisite
-        </p>
-        <h2 className="text-5xl font-serif font-semibold mb-4">Fine Jewelry</h2>
-        <p className="text-gray-300 max-w-md mb-6 leading-relaxed">
-          Since fine gems is a declaration of self to really intend what you
-          need, wear how you need, celebrate with when you need, and keep for
-          eternity. It&lsquo;s for great minutes, minor achievements, and in the
-          middle between.
-        </p>
-        <Button
-          variant="outline"
-          className="text-white border-white hover:bg-white hover:text-black px-8 py-4 transition bg-transparent"
-        >
-          Shop Now →
-        </Button>
-      </div>
+        <div className="max-w-xl lg:pl-8">
+          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.16em] text-luxury-gold">
+            Fine Jewelry
+          </p>
+          <h2 className="font-serif text-4xl leading-tight md:text-6xl">
+            Pieces that finish the look, not just fill the box.
+          </h2>
+          <p className="mt-6 text-base leading-8 text-luxury-gold-soft/76">
+            From delicate earrings to bold bridal sets, each Laluxury Gold piece is chosen for shine, shape, and how beautifully it photographs in real life.
+          </p>
 
-      {/* Right: Image + Arch + Circle */}
-      <div className="relative flex justify-center">
-        {/* Arch Container */}
-        <div className="relative w-[320px] h-[420px] md:w-[380px] md:h-[500px] rounded-t-[200px] overflow-hidden border-2 border-white">
-          <Image
-            src="/images/Sets7.jpg"
-            alt="Fine Jewelry"
-            fill
-            className="object-cover"
-          />
-        </div>
+          <div className="mt-8 grid gap-5 border-y border-luxury-gold/20 py-6 sm:grid-cols-3">
+            <div>
+              <p className="font-serif text-3xl text-luxury-gold">01</p>
+              <p className="mt-1 text-sm text-white/65">Statement sets</p>
+            </div>
+            <div>
+              <p className="font-serif text-3xl text-luxury-gold">02</p>
+              <p className="mt-1 text-sm text-white/65">Daily rings</p>
+            </div>
+            <div>
+              <p className="font-serif text-3xl text-luxury-gold">03</p>
+              <p className="mt-1 text-sm text-white/65">Gift-ready pieces</p>
+            </div>
+          </div>
 
-        {/* Overlapping Product Image */}
-        <div className="absolute -bottom-8 left-6 md:-bottom-[-6px] md:left-18 w-24 h-24 rounded-full flex items-center justify-center shadow-md">
-          <Image
-            src="/images/golds.svg"
-            alt="Rings"
-            width={80}
-            height={80}
-            className="object-contain"
-          />
+          <Link
+            href="/products"
+            className="mt-8 inline-flex h-11 items-center justify-center border border-luxury-gold px-6 text-sm font-semibold text-luxury-gold transition hover:bg-luxury-gold hover:text-luxury-black"
+          >
+            Browse Fine Jewelry
+          </Link>
         </div>
       </div>
     </motion.section>

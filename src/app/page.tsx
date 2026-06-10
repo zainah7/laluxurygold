@@ -3,7 +3,7 @@ import GiftGuides from "@/components/GiftGuides";
 import FineJewelry from "@/components/FineJewelry";
 import BestMaterial from "@/components/BestMaterial";
 import Testimonial from "@/components/Testimonial";
-import TestMotion from "@/components/TestMotion";
+import OurProducts from "@/components/OurProducts";
 
 export default function Home() {
   return (
@@ -12,9 +12,9 @@ export default function Home() {
       <Hero />
       <GiftGuides />
       <FineJewelry />
+      <OurProducts />
       <BestMaterial />
       <Testimonial />
-      <TestMotion />
     </>
   );
 }

@@ -1,94 +1,66 @@
 "use client";
 
-
-import { motion } from "./AnimationProvider";
 import Image from "next/image";
+import { motion } from "./AnimationProvider";
+
+const details = [
+  {
+    title: "Polished finish",
+    copy: "Warm gold tones selected to hold attention without overpowering the wearer.",
+  },
+  {
+    title: "Secure styling",
+    copy: "Clasps, links, and settings are checked so each piece feels ready to wear.",
+  },
+  {
+    title: "Occasion ready",
+    copy: "From bridal dressing to dinner looks, the collection is curated for real moments.",
+  },
+];
 
 function BestMaterial() {
-  // Component labels data
-  const labels = [
-    {
-      id: 1,
-      name: "Wire Guardian",
-      position: "left-4 sm:left-8 md:left-16 top-1/3",
-    },
-    {
-      id: 2,
-      name: "Ribbon Crimp",
-      position: "right-4 sm:right-8 md:right-16 top-1/4",
-      reverse: true,
-    },
-    {
-      id: 3,
-      name: "End Cap",
-      position: "left-6 sm:left-12 md:left-20 bottom-1/3",
-    },
-    {
-      id: 4,
-      name: "Chain Terminator",
-      position: "right-4 sm:right-8 md:right-16 top-1/2",
-      reverse: true,
-    },
-    {
-      id: 5,
-      name: "Bead Tip",
-      position: "left-2 sm:left-4 md:left-8 bottom-1/4",
-    },
-    {
-      id: 6,
-      name: "Cord Coil",
-      position: "right-6 sm:right-12 md:right-20 bottom-1/4",
-      reverse: true,
-    },
-  ];
-
   return (
     <motion.section
-      initial={{ opacity: 0, y: 40 }}
+      initial={{ opacity: 0, y: 36 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className="bg-white py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-20 text-center relative"
+      className="bg-white px-4 py-16 md:py-20"
     >
-      <div className="max-w-6xl mx-auto">
-        <p className="text-xs sm:text-sm text-[#79593D] mb-1 sm:mb-2 tracking-wider">
-          Basic And Exquisite
-        </p>
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-light text-gray-900 mb-8 sm:mb-12 md:mb-16">
-          Best Material
-        </h2>
+      <div className="container mx-auto grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+        <div>
+          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.16em] text-luxury-gold-dark">
+            Craft & Care
+          </p>
+          <h2 className="max-w-xl font-serif text-4xl leading-tight text-luxury-black md:text-5xl">
+            Designed to shine now and stay beautiful later.
+          </h2>
+          <p className="mt-5 max-w-lg leading-8 text-gray-600">
+            Laluxury Gold focuses on pieces that feel special in the hand, graceful on the body, and easy to care for after the occasion ends.
+          </p>
 
-        {/* Main rings container */}
-        <div className="relative w-full max-w-5xl mx-auto h-[300px] sm:h-[350px] md:h-[400px] lg:h-[500px] flex items-center justify-center">
-          {/* Golden rings visualization */}
-          <div className="relative w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96">
-            <Image
-              src="/images/golden-rings.svg"
-              alt="Golden wedding rings"
-              fill
-              className="object-contain"
-              quality={100}
-            />
-          </div>
-
-          {/* Component labels - Responsive adjustments */}
-          {labels.map((label) => (
-            <div key={label.id} className={`absolute ${label.position}`}>
-              <div
-                className={`flex items-center ${label.reverse ? "flex-row-reverse" : ""
-                  }`}
-              >
-                <div className="w-2 sm:w-3 h-2 sm:h-3 bg-[#7F5F43] rounded-full"></div>
-                <div
-                  className={`w-12 sm:w-16 md:w-24 h-px border-t-2 border-dashed border-gray-400 ${label.reverse ? "mr-1 sm:mr-2" : "ml-1 sm:ml-2"
-                    }`}
-                ></div>
-                <span className="text-xs sm:text-sm md:text-base text-gray-700 whitespace-nowrap mx-1 sm:mx-2">
-                  {label.name}
-                </span>
+          <div className="mt-8 divide-y divide-luxury-gold/20 border-y border-luxury-gold/20">
+            {details.map((detail) => (
+              <div key={detail.title} className="grid gap-2 py-5 sm:grid-cols-[0.35fr_0.65fr]">
+                <h3 className="font-semibold text-luxury-black">{detail.title}</h3>
+                <p className="text-sm leading-7 text-gray-600">{detail.copy}</p>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
+        </div>
+
+        <div className="relative min-h-[420px] bg-luxury-gold-soft">
+          <Image
+            src="/images/golden-rings.svg"
+            alt="Golden wedding rings"
+            fill
+            className="object-contain p-10"
+            quality={100}
+          />
+          <div className="absolute bottom-6 left-6 bg-luxury-black px-5 py-4 text-white">
+            <p className="text-xs uppercase tracking-[0.16em] text-luxury-gold">Signature detail</p>
+            <p className="mt-1 font-serif text-2xl">Made to be kept</p>
+          </div>
         </div>
       </div>
     </motion.section>

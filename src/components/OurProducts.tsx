@@ -1,120 +1,89 @@
 "use client";
 
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
+import Link from "next/link";
 import { motion } from "./AnimationProvider";
-import { useState } from "react";
 
-const products = {
-  topSeller: [
-    { id: 1, src: "/images/product-1.svg", alt: "Earrings" },
-    { id: 2, src: "/images/product-2.png", alt: "Ring" },
-    { id: 3, src: "/images/product-3.png", alt: "Necklace" },
-    { id: 4, src: "/images/product-4.png", alt: "Diamond Ring" },
-  ],
-  sale: [
-    { id: 5, src: "/images/product-1.svg", alt: "Sale Earrings" },
-    { id: 6, src: "/images/product-3.png", alt: "Sale Ring" },
-  ],
-  topRated: [
-    { id: 7, src: "/images/product-2.png", alt: "Top Rated Necklace" },
-    { id: 8, src: "/images/product-3.png", alt: "Top Rated Bracelet" },
-  ],
-  featured: [
-    { id: 9, src: "/images/product-4.png", alt: "Featured Ring" },
-    { id: 10, src: "/images/product-2.png", alt: "Featured Earrings" },
-  ],
-};
+const featuredProducts = [
+  {
+    name: "Bridal Jewelry Set",
+    category: "Sets",
+    src: "/images/Sets5.jpg",
+    alt: "Bridal jewelry set",
+  },
+  {
+    name: "Diamond Solitaire Ring",
+    category: "Rings",
+    src: "/images/Ring.jpg",
+    alt: "Diamond solitaire ring",
+  },
+  {
+    name: "Cuban Link Chain",
+    category: "Chains",
+    src: "/images/Chains.jpg",
+    alt: "Gold chain",
+  },
+  {
+    name: "Luxury Gold Watch",
+    category: "Watches",
+    src: "/images/Wristwatch1.jpg",
+    alt: "Luxury gold watch",
+  },
+];
 
 export default function OurProducts() {
-  const [activeTab, setActiveTab] = useState<keyof typeof products>("topSeller");
-
   return (
     <motion.section
-      initial={{ opacity: 0, y: 40 }}
+      initial={{ opacity: 0, y: 36 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className="bg-white py-20 text-center"
+      className="bg-white px-4 py-16 md:py-20"
       id="our-products"
     >
-      <p className="text-base font-medium text-[#79593D] mb-1">
-        Basic And Exquisite
-      </p>
-      <h2 className="text-3xl md:text-5xl font-moneta mb-6">Our Products</h2>
-
-      {/* Functional Tabs */}
-      <div className="flex justify-center space-x-4 mb-10 text-sm font-medium">
-        <button
-          onClick={() => setActiveTab("topSeller")}
-          className={`pb-1 ${activeTab === "topSeller"
-            ? "text-black border-b-2 border-black"
-            : "text-gray-400 hover:text-black"
-            }`}
-        >
-          Top Seller
-        </button>
-        <button
-          onClick={() => setActiveTab("sale")}
-          className={`pb-1 ${activeTab === "sale"
-            ? "text-black border-b-2 border-black"
-            : "text-gray-400 hover:text-black"
-            }`}
-        >
-          Sale
-        </button>
-        <button
-          onClick={() => setActiveTab("topRated")}
-          className={`pb-1 ${activeTab === "topRated"
-            ? "text-black border-b-2 border-black"
-            : "text-gray-400 hover:text-black"
-            }`}
-        >
-          Top Rated
-        </button>
-        <button
-          onClick={() => setActiveTab("featured")}
-          className={`pb-1 ${activeTab === "featured"
-            ? "text-black border-b-2 border-black"
-            : "text-gray-400 hover:text-black"
-            }`}
-        >
-          Featured
-        </button>
-      </div>
-
-      {/* Product Grid */}
-      <motion.div className="grid grid-cols-2 md:grid-cols-4 gap-6 px-4 md:px-20"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={{
-          visible: { transition: { staggerChildren: 0.18 } },
-          hidden: {}
-        }}
-      >
-        {products[activeTab].map((product: { id: number; src: string; alt: string }) => (
-          <motion.div
-            key={product.id}
-            className="bg-[#FFFFFF] rounded-lg shadow-lg p-4"
-            variants={{ hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0 } }}
-            transition={{ duration: 0.5, ease: 'easeOut' }}
+      <div className="container mx-auto">
+        <div className="mb-10 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p className="mb-3 text-sm font-semibold uppercase tracking-[0.16em] text-luxury-gold-dark">
+              Featured Collection
+            </p>
+            <h2 className="font-serif text-4xl text-luxury-black md:text-5xl">
+              Start with the pieces everyone notices.
+            </h2>
+          </div>
+          <Link
+            href="/products"
+            className="inline-flex h-11 items-center justify-center border border-luxury-black px-6 text-sm font-semibold text-luxury-black transition hover:bg-luxury-black hover:text-luxury-gold md:self-auto"
           >
-            <div className="relative w-full aspect-square mb-2">
-              <Image
-                src={product.src}
-                alt={product.alt}
-                fill
-                className="object-contain"
-              />
-            </div>
-          </motion.div>
-        ))}
-      </motion.div>
+            View All Products
+          </Link>
+        </div>
 
-      {/* Button */}
-      <div className="mt-10">
-        <Button variant="outline">Shop Now →</Button>
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {featuredProducts.map((product) => (
+            <Link
+              href="/products"
+              key={product.name}
+              className="group border border-luxury-gold/20 bg-white"
+            >
+              <div className="relative aspect-[4/5] overflow-hidden bg-luxury-gold-soft">
+                <Image
+                  src={product.src}
+                  alt={product.alt}
+                  fill
+                  sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+              </div>
+              <div className="p-4">
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-luxury-gold-dark">
+                  {product.category}
+                </p>
+                <h3 className="mt-2 font-serif text-2xl text-luxury-black">{product.name}</h3>
+              </div>
+            </Link>
+          ))}
+        </div>
       </div>
     </motion.section>
   );

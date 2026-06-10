@@ -1,221 +1,250 @@
 "use client";
 
-import { RotateCcw, Clock, CheckCircle, XCircle, Mail, Phone, MessageCircle } from "lucide-react";
+import { motion } from "framer-motion";
+import { RotateCcw, Clock, CheckCircle, XCircle, Mail, Phone, MessageCircle, ArrowRight } from "lucide-react";
 import Header from "@/components/Header";
 
 export default function ReturnsExchangePage() {
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 },
+  };
+
   return (
     <div className="min-h-screen bg-white">
       <Header />
-      {/* Header */}
-      <header className="bg-gradient-to-r from-emerald-900 to-emerald-800 text-white py-20 relative overflow-hidden">
-        <div className="absolute inset-0 bg-black/10"></div>
-        <div className="container mx-auto px-4 text-center relative z-10">
-          <div className="flex justify-center mb-6">
-            <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
-              <RotateCcw className="w-10 h-10 text-white" />
+      
+      {/* Hero Section */}
+      <section className="relative bg-luxury-black text-white py-24 md:py-32 overflow-hidden">
+        <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-luxury-gold/10 to-transparent pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-1/2 h-px bg-gradient-to-r from-transparent via-luxury-gold/30 to-transparent" />
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="max-w-3xl"
+          >
+            <p className="text-luxury-gold uppercase tracking-[0.3em] text-sm font-semibold mb-6">
+              Customer Excellence
+            </p>
+            <h1 className="text-5xl md:text-7xl font-serif mb-8 leading-tight">
+              Returns & <span className="italic">Exchanges</span>
+            </h1>
+            <p className="text-luxury-gold-soft/80 text-xl leading-relaxed mb-10 border-l-2 border-luxury-gold/40 pl-6">
+              Your satisfaction is our ultimate pursuit. We offer a seamless 30-day window for returns and exchanges, ensuring your Laluxury Gold experience is as flawless as our jewelry.
+            </p>
+            <div className="flex flex-wrap gap-4">
+              <a href="#process" className="bg-luxury-gold text-luxury-black px-8 py-4 font-semibold text-sm tracking-widest uppercase hover:bg-luxury-gold-muted transition-colors inline-flex items-center group">
+                Start a Return
+                <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </a>
+              <a href="#policy" className="border border-luxury-gold/50 text-luxury-gold px-8 py-4 font-semibold text-sm tracking-widest uppercase hover:bg-luxury-gold hover:text-luxury-black transition-all inline-flex items-center">
+                Full Policy
+              </a>
             </div>
-          </div>
-          <h1 className="text-5xl md:text-6xl font-serif mb-6">Returns & Exchange</h1>
-          <p className="text-white/90 text-xl max-w-2xl mx-auto leading-relaxed">30-day hassle-free returns and exchanges with full satisfaction guarantee</p>
+          </motion.div>
         </div>
-      </header>
+      </section>
 
-      {/* Content */}
-      <div className="container mx-auto px-4 py-20">
+      {/* Main Content */}
+      <div className="container mx-auto px-4 py-24">
         <div className="max-w-6xl mx-auto">
-          {/* 30-Day Guarantee */}
-          <section className="mb-20">
-            <div className="text-center mb-12">
-              <div className="w-24 h-24 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Clock className="w-12 h-12 text-emerald-600" />
-              </div>
-              <h2 className="text-4xl font-serif mb-4 text-gray-900">30-Day Guarantee</h2>
-              <p className="text-gray-600 text-lg max-w-2xl mx-auto">Not completely satisfied? Return your jewelry within 30 days for a full refund or exchange</p>
-            </div>
-            
-            <div className="grid md:grid-cols-2 gap-8">
-              <div className="bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-200 rounded-2xl p-8">
-                <div className="flex items-center mb-6">
-                  <CheckCircle className="w-8 h-8 text-green-600 mr-3" />
-                  <h3 className="text-2xl font-bold text-gray-900">Eligible for Return</h3>
+          
+          {/* Eligibility Section */}
+          <section id="policy" className="mb-32">
+            <motion.div 
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={containerVariants}
+              className="grid md:grid-cols-[0.8fr_1.2fr] gap-16 items-start"
+            >
+              <div>
+                <h2 className="text-4xl font-serif text-luxury-black mb-6">Return Eligibility</h2>
+                <p className="text-gray-600 mb-8 leading-relaxed">
+                  To maintain the highest standards of quality and hygiene, we require returned items to meet specific criteria. Each piece undergoes a rigorous inspection by our master jewelers upon return.
+                </p>
+                <div className="p-8 bg-luxury-gold-soft border border-luxury-gold/20 rounded-sm">
+                  <div className="flex items-center gap-4 mb-4">
+                    <Clock className="w-8 h-8 text-luxury-gold-dark" />
+                    <h3 className="font-serif text-xl">30-Day Window</h3>
+                  </div>
+                  <p className="text-gray-700 text-sm">
+                    Returns and exchanges must be initiated within 30 calendar days from the date of delivery confirmation.
+                  </p>
                 </div>
-                <ul className="space-y-4">
-                  <li className="flex items-start">
-                    <CheckCircle className="w-5 h-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" />
-                    <div>
-                      <span className="font-medium">Unworn jewelry</span>
-                      <p className="text-sm text-gray-600">Items in pristine, original condition</p>
-                    </div>
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircle className="w-5 h-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" />
-                    <div>
-                      <span className="font-medium">Original packaging</span>
-                      <p className="text-sm text-gray-600">All boxes, pouches, and materials included</p>
-                    </div>
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircle className="w-5 h-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" />
-                    <div>
-                      <span className="font-medium">Certificate included</span>
-                      <p className="text-sm text-gray-600">Authentication and warranty documents</p>
-                    </div>
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircle className="w-5 h-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" />
-                    <div>
-                      <span className="font-medium">Within 30 days</span>
-                      <p className="text-sm text-gray-600">From delivery date confirmation</p>
-                    </div>
-                  </li>
-                </ul>
               </div>
-              
-              <div className="bg-gradient-to-br from-red-50 to-pink-50 border-2 border-red-200 rounded-2xl p-8">
-                <div className="flex items-center mb-6">
-                  <XCircle className="w-8 h-8 text-red-600 mr-3" />
-                  <h3 className="text-2xl font-bold text-gray-900">Not Eligible</h3>
-                </div>
-                <ul className="space-y-4">
-                  <li className="flex items-start">
-                    <XCircle className="w-5 h-5 text-red-500 mr-3 mt-0.5 flex-shrink-0" />
-                    <div>
-                      <span className="font-medium">Custom/personalized items</span>
-                      <p className="text-sm text-gray-600">Engraved or specially made pieces</p>
-                    </div>
-                  </li>
-                  <li className="flex items-start">
-                    <XCircle className="w-5 h-5 text-red-500 mr-3 mt-0.5 flex-shrink-0" />
-                    <div>
-                      <span className="font-medium">Worn or damaged items</span>
-                      <p className="text-sm text-gray-600">Shows signs of wear or damage</p>
-                    </div>
-                  </li>
-                  <li className="flex items-start">
-                    <XCircle className="w-5 h-5 text-red-500 mr-3 mt-0.5 flex-shrink-0" />
-                    <div>
-                      <span className="font-medium">Missing packaging</span>
-                      <p className="text-sm text-gray-600">Without original boxes or certificates</p>
-                    </div>
-                  </li>
-                  <li className="flex items-start">
-                    <XCircle className="w-5 h-5 text-red-500 mr-3 mt-0.5 flex-shrink-0" />
-                    <div>
-                      <span className="font-medium">Final sale items</span>
-                      <p className="text-sm text-gray-600">Clearance and promotional items</p>
-                    </div>
-                  </li>
-                </ul>
+
+              <div className="grid sm:grid-cols-2 gap-8">
+                <motion.div variants={itemVariants} className="space-y-6">
+                  <h3 className="text-luxury-gold-dark font-semibold tracking-wider text-sm uppercase pb-2 border-b border-luxury-gold/20 flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4" /> Requirements
+                  </h3>
+                  <ul className="space-y-6">
+                    {[
+                      { title: "Pristine Condition", desc: "Must be unworn and without any signs of wear or damage." },
+                      { title: "Original Packaging", desc: "All original boxes, pouches, and shipping materials." },
+                      { title: "Certificates", desc: "Authenticity and warranty documents must be included." },
+                      { title: "Security Tags", desc: "Must remain attached and untampered if applicable." }
+                    ].map((item, idx) => (
+                      <li key={idx} className="group">
+                        <span className="font-serif text-lg text-luxury-black block mb-1 group-hover:text-luxury-gold-dark transition-colors">{item.title}</span>
+                        <p className="text-sm text-gray-500 leading-relaxed">{item.desc}</p>
+                      </li>
+                    ))}
+                  </ul>
+                </motion.div>
+
+                <motion.div variants={itemVariants} className="space-y-6">
+                  <h3 className="text-red-800/70 font-semibold tracking-wider text-sm uppercase pb-2 border-b border-red-100 flex items-center gap-2">
+                    <XCircle className="w-4 h-4" /> Non-Returnable
+                  </h3>
+                  <ul className="space-y-6">
+                    {[
+                      { title: "Bespoke & Custom", desc: "Personalized engravings or custom-made designs." },
+                      { title: "Final Sale Items", desc: "Items explicitly marked as final sale or clearance." },
+                      { title: "Tampered Goods", desc: "Items that show signs of resizing or repair elsewhere." },
+                      { title: "Missing Documents", desc: "Returns missing their original grading certificates." }
+                    ].map((item, idx) => (
+                      <li key={idx} className="group">
+                        <span className="font-serif text-lg text-luxury-black block mb-1 group-hover:text-red-800/70 transition-colors">{item.title}</span>
+                        <p className="text-sm text-gray-500 leading-relaxed">{item.desc}</p>
+                      </li>
+                    ))}
+                  </ul>
+                </motion.div>
               </div>
-            </div>
+            </motion.div>
           </section>
 
-          {/* Exchange Process */}
-          <section className="mb-20">
-            <div className="text-center mb-12">
-              <h2 className="text-4xl font-serif mb-4 text-gray-900">Simple Exchange Process</h2>
-              <p className="text-gray-600 text-lg">Three easy steps to exchange or return your jewelry</p>
+          {/* Process Section */}
+          <section id="process" className="mb-32 relative">
+            <div className="text-center mb-16">
+              <span className="text-luxury-gold font-semibold uppercase tracking-widest text-xs">The Experience</span>
+              <h2 className="text-4xl md:text-5xl font-serif text-luxury-black mt-4">Simple, Refined Process</h2>
             </div>
-            <div className="relative">
-              {/* Connection Line */}
-              <div className="hidden md:block absolute top-20 left-1/2 transform -translate-x-1/2 w-full max-w-4xl">
-                <div className="flex justify-between px-16">
-                  <div className="w-px h-32 bg-gradient-to-b from-emerald-300 to-transparent"></div>
-                  <div className="w-px h-32 bg-gradient-to-b from-emerald-300 to-transparent"></div>
-                </div>
-              </div>
-              
-              <div className="grid md:grid-cols-3 gap-8 relative z-10">
-                <div className="text-center group">
-                  <div className="relative mb-6">
-                    <div className="w-20 h-20 bg-gradient-to-r from-emerald-600 to-emerald-700 text-white rounded-full flex items-center justify-center mx-auto shadow-lg group-hover:scale-110 transition-transform duration-300">
-                      <span className="text-2xl font-bold">1</span>
-                    </div>
-                    <div className="absolute -top-2 -right-2 w-6 h-6 bg-emerald-200 rounded-full animate-pulse"></div>
+            
+            <div className="grid md:grid-cols-3 gap-0 border border-luxury-gold/20 divide-y md:divide-y-0 md:divide-x divide-luxury-gold/20">
+              {[
+                { 
+                  num: "01", 
+                  title: "Initiate Request", 
+                  desc: "Contact our concierge team with your order details and reason for the return or exchange.",
+                  icon: <Mail className="w-6 h-6" />
+                },
+                { 
+                  num: "02", 
+                  title: "Secure Shipment", 
+                  desc: "We provide a fully insured, prepaid return label. Secure your item in its original luxury packaging.",
+                  icon: <RotateCcw className="w-6 h-6" />
+                },
+                { 
+                  num: "03", 
+                  title: "Inspection & Finalization", 
+                  desc: "Upon receipt, our experts verify the item. Refunds or exchanges are processed within 5 business days.",
+                  icon: <CheckCircle className="w-6 h-6" />
+                }
+              ].map((step, idx) => (
+                <motion.div 
+                  key={idx}
+                  whileHover={{ backgroundColor: "rgba(255, 248, 225, 0.5)" }}
+                  className="p-12 transition-colors duration-500"
+                >
+                  <div className="text-luxury-gold/40 text-6xl font-serif mb-6">{step.num}</div>
+                  <div className="flex items-center gap-3 mb-4 text-luxury-gold-dark">
+                    {step.icon}
+                    <h3 className="text-xl font-serif text-luxury-black">{step.title}</h3>
                   </div>
-                  <h3 className="text-xl font-bold mb-3">Contact Us</h3>
-                  <p className="text-gray-600 leading-relaxed">Email us with your order number and reason for exchange. We&apos;ll guide you through the process.</p>
-                </div>
-                
-                <div className="text-center group">
-                  <div className="relative mb-6">
-                    <div className="w-20 h-20 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-full flex items-center justify-center mx-auto shadow-lg group-hover:scale-110 transition-transform duration-300">
-                      <span className="text-2xl font-bold">2</span>
-                    </div>
-                    <div className="absolute -top-2 -right-2 w-6 h-6 bg-blue-200 rounded-full animate-pulse"></div>
-                  </div>
-                  <h3 className="text-xl font-bold mb-3">Ship Back</h3>
-                  <p className="text-gray-600 leading-relaxed">Use our prepaid return label to send the item back safely and securely to our facility.</p>
-                </div>
-                
-                <div className="text-center group">
-                  <div className="relative mb-6">
-                    <div className="w-20 h-20 bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-full flex items-center justify-center mx-auto shadow-lg group-hover:scale-110 transition-transform duration-300">
-                      <span className="text-2xl font-bold">3</span>
-                    </div>
-                    <div className="absolute -top-2 -right-2 w-6 h-6 bg-purple-200 rounded-full animate-pulse"></div>
-                  </div>
-                  <h3 className="text-xl font-bold mb-3">Receive New Item</h3>
-                  <p className="text-gray-600 leading-relaxed">Get your exchange or full refund processed within 5-7 business days of receipt.</p>
-                </div>
-              </div>
+                  <p className="text-gray-600 leading-relaxed text-sm">{step.desc}</p>
+                </motion.div>
+              ))}
             </div>
           </section>
 
           {/* Refund Information */}
-          <section className="mb-12">
-            <h2 className="text-2xl font-serif mb-6">Refund Information</h2>
-            <div className="space-y-4">
-              <div className="border-l-4 border-emerald-900 pl-4">
-                <h4 className="font-medium mb-1">Processing Time</h4>
-                <p className="text-gray-600 text-sm">Refunds are processed within 5-7 business days after we receive your return.</p>
+          <section className="mb-32 bg-luxury-ink text-white p-12 md:p-20 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-luxury-gold/5 rounded-full -mr-32 -mt-32 blur-3xl" />
+            <div className="grid md:grid-cols-2 gap-16 relative z-10">
+              <div>
+                <h2 className="text-4xl font-serif mb-8">Refund Transparency</h2>
+                <div className="space-y-8">
+                  {[
+                    { q: "How long does it take?", a: "Once your return is received and inspected, we process refunds within 5-7 business days." },
+                    { q: "How will I be refunded?", a: "Credits are issued to the original payment method used during your purchase." },
+                    { q: "What about shipping costs?", a: "Original shipping fees are non-refundable unless the return is due to a product defect." }
+                  ].map((item, idx) => (
+                    <div key={idx} className="border-l border-luxury-gold/30 pl-6">
+                      <h4 className="font-serif text-lg mb-2 text-luxury-gold-muted">{item.q}</h4>
+                      <p className="text-white/70 text-sm leading-relaxed">{item.a}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
-              <div className="border-l-4 border-emerald-900 pl-4">
-                <h4 className="font-medium mb-1">Refund Method</h4>
-                <p className="text-gray-600 text-sm">Refunds will be issued to the original payment method used for purchase.</p>
-              </div>
-              <div className="border-l-4 border-emerald-900 pl-4">
-                <h4 className="font-medium mb-1">Shipping Costs</h4>
-                <p className="text-gray-600 text-sm">Original shipping costs are non-refundable unless the return is due to our error.</p>
+              <div className="hidden md:flex items-center justify-center border border-luxury-gold/20 bg-luxury-black/40 backdrop-blur-sm p-12">
+                 <div className="text-center">
+                    <RotateCcw className="w-16 h-16 text-luxury-gold mx-auto mb-6 opacity-50" />
+                    <p className="font-serif text-xl text-luxury-gold-soft">Hassle-free transitions</p>
+                 </div>
               </div>
             </div>
           </section>
 
-          {/* Contact */}
+          {/* Contact Concierge */}
           <section>
-            <div className="bg-gradient-to-r from-emerald-900 to-emerald-800 rounded-3xl p-8 md:p-12 text-white text-center">
-              <h3 className="text-3xl font-serif mb-6">Need Help with Returns?</h3>
-              <p className="text-white/90 text-lg mb-8 max-w-2xl mx-auto">Our dedicated customer service team is here to make your return or exchange process as smooth as possible</p>
-              
-              <div className="grid md:grid-cols-3 gap-8">
-                <div className="group">
-                  <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-white/30 transition-colors">
-                    <Mail className="w-8 h-8 text-white" />
+            <div className="text-center max-w-3xl mx-auto mb-16">
+              <h2 className="text-4xl font-serif text-luxury-black mb-6">Bespoke Support</h2>
+              <p className="text-gray-600">Our concierge team is available to assist you with every aspect of your return or exchange to ensure a graceful experience.</p>
+            </div>
+            
+            <div className="grid md:grid-cols-3 gap-8">
+              {[
+                { 
+                  icon: <Mail className="w-5 h-5" />, 
+                  title: "Email Concierge", 
+                  val: "concierge@laluxurygold.com", 
+                  note: "Response within 24 hours" 
+                },
+                { 
+                  icon: <Phone className="w-5 h-5" />, 
+                  title: "Private Line", 
+                  val: "+234 814 973 4675", 
+                  note: "Mon–Fri, 9AM–6PM" 
+                },
+                { 
+                  icon: <MessageCircle className="w-5 h-5" />, 
+                  title: "WhatsApp", 
+                  val: "Instant Messaging", 
+                  href: "https://api.whatsapp.com/send?phone=2348149734675",
+                  note: "Fastest response time" 
+                }
+              ].map((item, idx) => (
+                <div key={idx} className="border border-luxury-gold/20 p-8 text-center group hover:border-luxury-gold transition-colors">
+                  <div className="w-12 h-12 bg-luxury-gold-soft text-luxury-gold-dark rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-luxury-gold group-hover:text-luxury-black transition-all">
+                    {item.icon}
                   </div>
-                  <h4 className="text-xl font-bold mb-2">Email Support</h4>
-                  <p className="text-white/80 mb-2">returns@laluxurygold.com</p>
-                  <p className="text-white/60 text-sm">Response within 24 hours</p>
+                  <h4 className="font-serif text-lg mb-2">{item.title}</h4>
+                  {item.href ? (
+                    <a href={item.href} target="_blank" rel="noopener noreferrer" className="text-luxury-black font-semibold block mb-1 hover:text-luxury-gold transition-colors">
+                      {item.val}
+                    </a>
+                  ) : (
+                    <p className="text-luxury-black font-semibold mb-1">{item.val}</p>
+                  )}
+                  <p className="text-xs text-gray-500 uppercase tracking-widest">{item.note}</p>
                 </div>
-                
-                <div className="group">
-                  <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-white/30 transition-colors">
-                    <Phone className="w-8 h-8 text-white" />
-                  </div>
-                  <h4 className="text-xl font-bold mb-2">Phone Support</h4>
-                  <p className="text-white/80 mb-2">+234 814 973 4675</p>
-                  <p className="text-white/60 text-sm">Mon-Fri 9AM-6PM EST</p>
-                </div>
-                
-                <a href="https://api.whatsapp.com/send?phone=2348149734675" target="_blank" rel="noopener noreferrer" className="group">
-                  <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-white/30 transition-colors">
-                    <MessageCircle className="w-8 h-8 text-white" />
-                  </div>
-                  <h4 className="text-xl font-bold mb-2">WhatsApp</h4>
-                  <p className="text-white/80 mb-2">Chat with us</p>
-                  <p className="text-white/60 text-sm">Quick responses</p>
-                </a>
-              </div>
+              ))}
             </div>
           </section>
         </div>

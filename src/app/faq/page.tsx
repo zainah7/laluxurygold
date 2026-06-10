@@ -1,320 +1,287 @@
 "use client";
 
-import { useState } from "react";
-import { HelpCircle, Mail, Phone, MessageCircle, ChevronDown, Search, Star } from "lucide-react";
-import { motion } from "framer-motion";
+import { useMemo, useState } from "react";
+import { ChevronDown, Mail, MessageCircle, Phone, Search } from "lucide-react";
 import Header from "../../components/Header";
 
 const faqs = [
   {
     category: "Orders & Shipping",
+    intro: "Delivery, tracking, and how your order moves after confirmation.",
     questions: [
       {
         q: "How long does shipping take?",
-        a: "Standard shipping takes 5-7 business days, while express shipping takes 2-3 business days. International orders may take 7-18 business days depending on location."
+        a: "Standard shipping usually takes 5-7 business days. Express delivery takes 2-3 business days. International delivery times vary by location.",
       },
       {
         q: "Do you offer free shipping?",
-        a: "Yes! We offer free standard shipping on all orders over $100 within the United States."
+        a: "Yes. Free standard shipping is available on qualifying orders. If a promotion is active, it will be confirmed before checkout or order payment.",
       },
       {
         q: "Can I track my order?",
-        a: "Absolutely! You'll receive a tracking number via email once your order ships. You can track your package on our website or the carrier's site."
-      }
-    ]
+        a: "Yes. Once your order is dispatched, you will receive tracking details so you can follow the delivery progress.",
+      },
+    ],
   },
   {
     category: "Products & Quality",
+    intro: "Materials, finish, and what to expect from each Laluxury Gold piece.",
     questions: [
       {
         q: "Are your diamonds certified?",
-        a: "Yes, all our diamonds come with certificates from reputable grading institutes like GIA, AGS, or EGL, ensuring authenticity and quality."
+        a: "Where certification applies, stones are supplied with the relevant documentation. For a specific piece, contact us and we will confirm the details before purchase.",
       },
       {
         q: "What metals do you use?",
-        a: "We use only premium metals including 14k and 18k gold (white, yellow, and rose), platinum, and sterling silver."
+        a: "Our collection focuses on premium gold jewelry, with select pieces available in different finishes. Product details can be confirmed before order placement.",
       },
       {
         q: "Can I customize jewelry pieces?",
-        a: "Yes! We offer custom design services. Contact our design team to discuss your vision and we'll create a unique piece just for you."
-      }
-    ]
+        a: "Yes. Custom requests are reviewed based on design, size, material, and availability. Send a reference or describe what you want and our team will guide you.",
+      },
+    ],
   },
   {
     category: "Returns & Exchanges",
+    intro: "What happens if a piece needs to be returned, exchanged, or resized.",
     questions: [
       {
         q: "What is your return policy?",
-        a: "We offer a 30-day return policy. Items must be unworn, in original condition, and include all original packaging and certificates."
+        a: "Returns are reviewed within 30 days for unworn items in original condition, with packaging and any included documents intact.",
       },
       {
         q: "How do I return an item?",
-        a: "Contact our customer service team with your order number. We'll provide a prepaid return label and guide you through the process."
+        a: "Contact our team with your order details and reason for return. We will review the request and explain the next step.",
       },
       {
         q: "Can I exchange for a different size?",
-        a: "Yes! We offer free exchanges for different sizes within 30 days of purchase, subject to availability."
-      }
-    ]
+        a: "Yes, where stock and item condition allow. Size exchanges are easiest when requested soon after receiving your order.",
+      },
+    ],
   },
   {
-    category: "Care & Maintenance",
+    category: "Care & Warranty",
+    intro: "Keeping your gold clean, polished, and secure over time.",
     questions: [
       {
         q: "How should I clean my jewelry?",
-        a: "Use a soft cloth for daily cleaning. For deeper cleaning, use warm soapy water and a soft brush. We also offer professional cleaning services."
+        a: "Wipe pieces with a soft cloth after wear. Avoid perfume, lotion, harsh chemicals, swimming, and heavy activity while wearing fine jewelry.",
       },
       {
-        q: "How often should I have my jewelry inspected?",
-        a: "We recommend professional inspection every 6 months to check prongs, settings, and overall condition. This service is free under our warranty."
+        q: "How often should I inspect my jewelry?",
+        a: "We recommend checking clasps, prongs, and stones every few months. If anything feels loose, stop wearing the piece and contact us.",
       },
       {
-        q: "What's covered under warranty?",
-        a: "Our lifetime warranty covers manufacturing defects, prong re-tipping, stone tightening, and professional cleaning. Normal wear and accidental damage are not covered."
-      }
-    ]
-  }
+        q: "What is covered under warranty?",
+        a: "Warranty support covers eligible craftsmanship concerns and selected care services. Accidental damage, loss, and work done by another jeweler are not covered.",
+      },
+    ],
+  },
+];
+
+const quickLinks = [
+  "Shipping time",
+  "Returns",
+  "Customization",
+  "Warranty",
 ];
 
 export default function FAQPage() {
-  const [openItems, setOpenItems] = useState<string[]>([]);
+  const [openItems, setOpenItems] = useState<string[]>(["0-0"]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [activeCategory, setActiveCategory] = useState(faqs[0].category);
 
   const toggleItem = (id: string) => {
-    setOpenItems(prev => 
-      prev.includes(id) 
-        ? prev.filter(item => item !== id)
-        : [...prev, id]
+    setOpenItems((prev) =>
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
     );
   };
 
-  const filteredFaqs = faqs.map(category => ({
-    ...category,
-    questions: category.questions.filter(
-      faq => 
-        faq.q.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        faq.a.toLowerCase().includes(searchTerm.toLowerCase())
-    )
-  })).filter(category => category.questions.length > 0);
+  const filteredFaqs = useMemo(() => {
+    const term = searchTerm.trim().toLowerCase();
+
+    return faqs
+      .filter((section) => !term || section.category === activeCategory)
+      .map((section) => ({
+        ...section,
+        questions: section.questions.filter(
+          (faq) =>
+            !term ||
+            faq.q.toLowerCase().includes(term) ||
+            faq.a.toLowerCase().includes(term) ||
+            section.category.toLowerCase().includes(term)
+        ),
+      }))
+      .filter((section) => section.questions.length > 0);
+  }, [activeCategory, searchTerm]);
+
+  const totalQuestions = faqs.reduce((count, section) => count + section.questions.length, 0);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white text-luxury-black">
       <Header />
-      {/* Header */}
-      <motion.header 
-        className="bg-gradient-to-r from-emerald-900 to-emerald-800 text-white py-20 relative overflow-hidden"
-        initial={{ opacity: 0, y: -50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-      >
-        <div className="absolute inset-0 bg-black/10"></div>
-        <div className="container mx-auto px-4 text-center relative z-10">
-          <motion.div 
-            className="flex justify-center mb-6"
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
-              <HelpCircle className="w-10 h-10 text-white" />
-            </div>
-          </motion.div>
-          <motion.h1 
-            className="text-5xl md:text-6xl font-serif mb-6"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-          >
-            Frequently Asked Questions
-          </motion.h1>
-          <motion.p 
-            className="text-white/90 text-xl max-w-2xl mx-auto leading-relaxed mb-8"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-          >
-            Find answers to common questions about our jewelry and services
-          </motion.p>
-          
-          {/* Search Bar */}
-          <motion.div 
-            className="max-w-md mx-auto relative"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
-          >
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <Search className="h-5 w-5 text-white/60" />
-            </div>
-            <input
-              type="text"
-              placeholder="Search questions..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 bg-white/20 backdrop-blur-sm border border-white/30 rounded-full text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-transparent"
-            />
-          </motion.div>
-        </div>
-      </motion.header>
 
-      {/* Content */}
-      <div className="container mx-auto px-4 py-20">
-        <div className="max-w-5xl mx-auto">
-          {/* Popular Questions */}
-          <motion.section 
-            className="mb-16"
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.6 }}
-          >
-            <motion.div 
-              className="text-center mb-12"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              <div className="flex justify-center items-center mb-4">
-                <Star className="w-8 h-8 text-amber-500 mr-2" />
-                <h2 className="text-3xl font-serif text-gray-900">Most Popular Questions</h2>
+      <main>
+        <section className="bg-luxury-black px-4 py-20 text-white">
+          <div className="container mx-auto grid gap-10 lg:grid-cols-[1fr_0.78fr] lg:items-end">
+            <div>
+              <p className="mb-4 text-sm font-semibold uppercase tracking-[0.18em] text-luxury-gold">
+                Client Notes
+              </p>
+              <h1 className="max-w-3xl font-serif text-4xl leading-tight sm:text-5xl md:text-6xl">
+                Answers before you choose your next piece.
+              </h1>
+              <p className="mt-6 max-w-2xl text-base leading-8 text-luxury-gold-soft/78 md:text-lg">
+                A quiet guide to ordering, caring for, and shopping Laluxury Gold jewelry. Search below or browse by topic.
+              </p>
+            </div>
+
+            <div className="border border-luxury-gold/30 p-5">
+              <label htmlFor="faq-search" className="mb-3 block text-sm font-medium text-luxury-gold">
+                Search questions
+              </label>
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-luxury-gold" />
+                <input
+                  id="faq-search"
+                  value={searchTerm}
+                  onChange={(event) => setSearchTerm(event.target.value)}
+                  placeholder="Try returns, sizing, warranty..."
+                  className="h-12 w-full border border-luxury-gold/30 bg-luxury-ink pl-10 pr-4 text-sm text-white outline-none placeholder:text-white/45 focus:border-luxury-gold"
+                />
               </div>
-              <p className="text-gray-600 text-lg">Quick answers to our most frequently asked questions</p>
-            </motion.div>
-            
-            <motion.div 
-              className="grid md:grid-cols-2 gap-6 mb-12"
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.2 }}
-              variants={{
-                visible: { transition: { staggerChildren: 0.1 } },
-                hidden: {}
-              }}
-            >
-              <motion.div 
-                className="bg-gradient-to-br from-emerald-50 to-emerald-100 border border-emerald-200 rounded-2xl p-6 hover:shadow-lg transition-shadow"
-                variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
-              >
-                <h3 className="font-bold text-lg mb-2 text-emerald-900">Do you offer free shipping?</h3>
-                <p className="text-gray-700">Yes! Free standard shipping on orders over $100 within the US.</p>
-              </motion.div>
-              <motion.div 
-                className="bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200 rounded-2xl p-6 hover:shadow-lg transition-shadow"
-                variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
-              >
-                <h3 className="font-bold text-lg mb-2 text-blue-900">What&apos;s your return policy?</h3>
-                <p className="text-gray-700">30-day returns on unworn items in original condition and packaging.</p>
-              </motion.div>
-              <motion.div 
-                className="bg-gradient-to-br from-purple-50 to-purple-100 border border-purple-200 rounded-2xl p-6 hover:shadow-lg transition-shadow"
-                variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
-              >
-                <h3 className="font-bold text-lg mb-2 text-purple-900">Are your diamonds certified?</h3>
-                <p className="text-gray-700">Yes, all diamonds come with certificates from GIA, AGS, or EGL.</p>
-              </motion.div>
-              <motion.div 
-                className="bg-gradient-to-br from-amber-50 to-amber-100 border border-amber-200 rounded-2xl p-6 hover:shadow-lg transition-shadow"
-                variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
-              >
-                <h3 className="font-bold text-lg mb-2 text-amber-900">How long is the warranty?</h3>
-                <p className="text-gray-700">Lifetime warranty on craftsmanship plus 1-year extended coverage.</p>
-              </motion.div>
-            </motion.div>
-          </motion.section>
-
-          {/* FAQ Categories */}
-          {filteredFaqs.length === 0 && searchTerm ? (
-            <div className="text-center py-12">
-              <HelpCircle className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-              <h3 className="text-xl font-medium text-gray-500 mb-2">No results found</h3>
-              <p className="text-gray-400">Try searching with different keywords</p>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {quickLinks.map((link) => (
+                  <button
+                    key={link}
+                    onClick={() => setSearchTerm(link)}
+                    className="border border-luxury-gold/25 px-3 py-1.5 text-xs text-luxury-gold-soft/80 transition hover:border-luxury-gold hover:text-luxury-gold"
+                  >
+                    {link}
+                  </button>
+                ))}
+              </div>
             </div>
-          ) : (
-            filteredFaqs.map((category, categoryIndex) => (
-              <section key={categoryIndex} className="mb-16">
-                <div className="flex items-center mb-8">
-                  <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center mr-4">
-                    <HelpCircle className="w-6 h-6 text-emerald-600" />
+          </div>
+        </section>
+
+        <section className="container mx-auto grid gap-12 px-4 py-16 lg:grid-cols-[260px_1fr]">
+          <aside className="lg:sticky lg:top-28 lg:self-start">
+            <p className="mb-4 text-sm font-semibold uppercase tracking-[0.16em] text-luxury-gold-dark">
+              Topics
+            </p>
+            <div className="border-y border-luxury-gold/25">
+              {faqs.map((section) => {
+                const isActive = activeCategory === section.category;
+
+                return (
+                  <button
+                    key={section.category}
+                    onClick={() => {
+                      setActiveCategory(section.category);
+                      setSearchTerm("");
+                    }}
+                    className={`flex w-full items-center justify-between border-b border-luxury-gold/15 py-4 text-left text-sm transition last:border-b-0 ${
+                      isActive ? "text-luxury-black" : "text-gray-500 hover:text-luxury-gold-dark"
+                    }`}
+                  >
+                    <span>{section.category}</span>
+                    <span className={isActive ? "text-luxury-gold-dark" : "text-gray-300"}>
+                      {section.questions.length}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+            <p className="mt-5 text-sm leading-6 text-gray-500">
+              {totalQuestions} answers across ordering, quality, returns, and care.
+            </p>
+          </aside>
+
+          <div>
+            {filteredFaqs.length === 0 ? (
+              <div className="border border-luxury-gold/25 bg-luxury-gold-soft p-8">
+                <h2 className="font-serif text-3xl">No answer found</h2>
+                <p className="mt-3 max-w-xl leading-7 text-gray-600">
+                  Try a different keyword, or send us a message and we will help with the exact piece or order you have in mind.
+                </p>
+              </div>
+            ) : (
+              filteredFaqs.map((section, sectionIndex) => (
+                <section key={section.category} className="mb-14 last:mb-0">
+                  <div className="mb-6 grid gap-3 border-b border-luxury-gold/25 pb-5 md:grid-cols-[0.35fr_0.65fr]">
+                    <h2 className="font-serif text-3xl">{section.category}</h2>
+                    <p className="max-w-xl text-sm leading-7 text-gray-600">{section.intro}</p>
                   </div>
-                  <h2 className="text-3xl font-serif text-emerald-900">{category.category}</h2>
-                </div>
-                <div className="space-y-4">
-                  {category.questions.map((faq, faqIndex) => {
-                    const itemId = `${categoryIndex}-${faqIndex}`;
-                    const isOpen = openItems.includes(itemId);
-                    
-                    return (
-                      <div key={faqIndex} className="bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300">
-                        <button
-                          onClick={() => toggleItem(itemId)}
-                          className="w-full text-left p-6 hover:bg-gray-50 transition-colors flex justify-between items-center rounded-2xl"
-                        >
-                          <h3 className="font-medium text-gray-900 pr-4 text-lg">{faq.q}</h3>
-                          <ChevronDown className={`w-6 h-6 text-emerald-600 transition-transform duration-300 flex-shrink-0 ${isOpen ? 'rotate-180' : ''}`} />
-                        </button>
-                        {isOpen && (
-                          <div className="px-6 pb-6">
-                            <div className="border-t border-gray-100 pt-4">
-                              <p className="text-gray-700 leading-relaxed">{faq.a}</p>
+
+                  <div className="divide-y divide-luxury-gold/20">
+                    {section.questions.map((faq, faqIndex) => {
+                      const itemId = `${sectionIndex}-${faqIndex}`;
+                      const isOpen = openItems.includes(itemId);
+
+                      return (
+                        <article key={faq.q} className="py-1">
+                          <button
+                            onClick={() => toggleItem(itemId)}
+                            className="flex w-full items-center justify-between gap-6 py-5 text-left"
+                          >
+                            <span className="text-lg font-medium text-luxury-black">{faq.q}</span>
+                            <span className="flex h-8 w-8 flex-none items-center justify-center border border-luxury-gold/35 text-luxury-gold-dark">
+                              <ChevronDown className={`h-4 w-4 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`} />
+                            </span>
+                          </button>
+                          {isOpen && (
+                            <div className="max-w-3xl pb-6 pr-10">
+                              <p className="leading-7 text-gray-600">{faq.a}</p>
                             </div>
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-              </section>
-            ))
-          )}
+                          )}
+                        </article>
+                      );
+                    })}
+                  </div>
+                </section>
+              ))
+            )}
+          </div>
+        </section>
 
-          {/* Contact Section */}
-          <section className="mt-20">
-            <div className="bg-gradient-to-r from-emerald-900 to-emerald-800 rounded-3xl p-8 md:p-12 text-white text-center">
-              <div className="flex justify-center mb-6">
-                <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
-                  <HelpCircle className="w-10 h-10 text-white" />
-                </div>
-              </div>
-              <h3 className="text-3xl font-serif mb-6">Still Have Questions?</h3>
-              <p className="text-white/90 text-lg mb-8 max-w-2xl mx-auto">Our expert customer service team is ready to provide personalized assistance for all your jewelry needs</p>
-              
-              <div className="grid md:grid-cols-3 gap-8">
-                <div className="group">
-                  <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-white/30 transition-colors">
-                    <Mail className="w-8 h-8 text-white" />
-                  </div>
-                  <h4 className="text-xl font-bold mb-2">Email Support</h4>
-                  <p className="text-white/80 mb-2">support@laluxurygold.com</p>
-                  <p className="text-white/60 text-sm">Detailed responses within 24 hours</p>
-                </div>
-                
-                <div className="group">
-                  <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-white/30 transition-colors">
-                    <Phone className="w-8 h-8 text-white" />
-                  </div>
-                  <h4 className="text-xl font-bold mb-2">Phone Support</h4>
-                  <p className="text-white/80 mb-2">+234 814 973 4675</p>
-                  <p className="text-white/60 text-sm">Mon-Fri 9AM-6PM EST</p>
-                </div>
-                
-                <a href="https://api.whatsapp.com/send?phone=2348149734675" target="_blank" rel="noopener noreferrer" className="group">
-                  <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-white/30 transition-colors">
-                    <MessageCircle className="w-8 h-8 text-white" />
-                  </div>
-                  <h4 className="text-xl font-bold mb-2">WhatsApp</h4>
-                  <p className="text-white/80 mb-2">Chat with us</p>
-                  <p className="text-white/60 text-sm">Quick responses</p>
-                </a>
-              </div>
-              
-              <div className="mt-8 pt-8 border-t border-white/20">
-                <p className="text-white/70 text-sm">Average response time: Under 2 hours during business hours</p>
-              </div>
+        <section className="container mx-auto px-4 pb-20">
+          <div className="grid gap-8 border border-luxury-gold/25 bg-luxury-gold-soft p-6 md:grid-cols-[0.9fr_1.1fr] md:p-10">
+            <div>
+              <p className="mb-3 text-sm font-semibold uppercase tracking-[0.16em] text-luxury-gold-dark">
+                Still unsure?
+              </p>
+              <h2 className="font-serif text-3xl md:text-4xl">Ask us about the exact piece.</h2>
+              <p className="mt-4 max-w-lg leading-7 text-gray-600">
+                Send a photo, product name, or screenshot from Instagram and we will help with availability, sizing, care, or ordering.
+              </p>
             </div>
-          </section>
-        </div>
-      </div>
+
+            <div className="grid gap-4 sm:grid-cols-3">
+              <a href="mailto:support@laluxurygold.com" className="border border-luxury-gold/30 bg-white p-4 transition hover:border-luxury-gold">
+                <Mail className="mb-4 h-5 w-5 text-luxury-gold-dark" />
+                <p className="font-semibold">Email</p>
+                <p className="mt-1 text-sm text-gray-600">support@laluxurygold.com</p>
+              </a>
+              <a href="tel:+2348149734675" className="border border-luxury-gold/30 bg-white p-4 transition hover:border-luxury-gold">
+                <Phone className="mb-4 h-5 w-5 text-luxury-gold-dark" />
+                <p className="font-semibold">Phone</p>
+                <p className="mt-1 text-sm text-gray-600">+234 814 973 4675</p>
+              </a>
+              <a
+                href="https://api.whatsapp.com/send?phone=2348149734675"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="border border-luxury-gold/30 bg-white p-4 transition hover:border-luxury-gold"
+              >
+                <MessageCircle className="mb-4 h-5 w-5 text-luxury-gold-dark" />
+                <p className="font-semibold">WhatsApp</p>
+                <p className="mt-1 text-sm text-gray-600">Quick message</p>
+              </a>
+            </div>
+          </div>
+        </section>
+      </main>
     </div>
   );
 }

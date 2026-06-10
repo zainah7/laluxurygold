@@ -1,69 +1,77 @@
 "use client";
 
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
+import Link from "next/link";
 import { motion } from "./AnimationProvider";
+
+const occasions = [
+  {
+    title: "For Her Day",
+    copy: "Elegant sets and earrings that feel personal without trying too hard.",
+    image: "/images/Sets14.jpg",
+  },
+  {
+    title: "For Bridal Moments",
+    copy: "Gold pieces with enough presence for ceremonies, portraits, and entrances.",
+    image: "/images/Sets13.jpg",
+  },
+  {
+    title: "For Everyday Shine",
+    copy: "Rings and chains that make a simple outfit look considered.",
+    image: "/images/ring8.png",
+  },
+];
 
 export default function GiftGuides() {
   return (
     <motion.section
-      initial={{ opacity: 0, y: 40 }}
+      initial={{ opacity: 0, y: 36 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className="bg-[#FAEFE6] py-20 px-6 md:px-20 grid grid-cols-1 md:grid-cols-2 gap-10 items-center"
+      className="bg-luxury-gold-soft px-4 py-16 md:py-20"
     >
-      {/* Left - Image with arch */}
-      <div className="relative flex justify-center">
-        {/* Arch Frame */}
-        <div className="relative w-[320px] h-[420px] md:w-[380px] md:h-[500px] rounded-t-[200px] border-[2px] overflow-hidden">
-          <Image
-            src="/images/Sets14.jpg"
-            alt="Gift Guide"
-            fill
-            className="object-cover"
-          />
+      <div className="container mx-auto">
+        <div className="mb-10 grid gap-6 md:grid-cols-[0.8fr_1.2fr] md:items-end">
+          <div>
+            <p className="mb-3 text-sm font-semibold uppercase tracking-[0.16em] text-luxury-gold-dark">
+              Curated Picks
+            </p>
+            <h2 className="font-serif text-4xl text-luxury-black md:text-5xl">
+              Jewelry for the moment she will remember.
+            </h2>
+          </div>
+          <p className="max-w-2xl text-base leading-8 text-luxury-ink/70">
+            Choose from bridal sets, refined earrings, polished rings, and gold chains made to suit celebrations, gifting, and daily luxury.
+          </p>
         </div>
 
-        {/* Earrings Circle Image */}
-        <div className="absolute bottom-2 right-[-12px] md:-bottom-[-18px] md:right-18 w-16 h-16 md:w-24 md:h-24 rounded-full overflow-hidden border-2 border-white shadow-lg">
-          <Image
-            src="/images/rings.svg"
-            alt="Earrings"
-            width={96}
-            height={96}
-            className="w-full h-full object-cover"
-          />
+        <div className="grid gap-5 md:grid-cols-3">
+          {occasions.map((item) => (
+            <Link
+              key={item.title}
+              href="/products"
+              className="group block border border-luxury-gold/25 bg-white"
+            >
+              <div className="relative aspect-[4/5] overflow-hidden bg-luxury-gold-soft">
+                <Image
+                  src={item.image}
+                  alt={item.title}
+                  fill
+                  sizes="(min-width: 768px) 33vw, 100vw"
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+              </div>
+              <div className="p-5">
+                <h3 className="font-serif text-2xl text-luxury-black">{item.title}</h3>
+                <p className="mt-2 min-h-14 text-sm leading-6 text-gray-600">{item.copy}</p>
+                <span className="mt-5 inline-flex text-sm font-semibold text-luxury-gold-dark">
+                  Explore pieces →
+                </span>
+              </div>
+            </Link>
+          ))}
         </div>
-      </div>
-
-      {/* Right - Text */}
-      <div>
-        {/* Icon */}
-        <div className="mb-2">
-          <Image
-            src="/images/earrings.svg"
-            alt="Ring Icon"
-            width={30}
-            height={30}
-          />
-        </div>
-
-        <p className="text-sm text-gray-600 font-semibold mb-1">
-          Basic And Exquisite
-        </p>
-        <h2 className="text-5xl font-serif font-semibold mb-4">Gift Guides</h2>
-        <p className="text-[#737373] max-w-md mb-6 leading-relaxed">
-          what you need, wear how you need, celebrate with when you need, and
-          keep for eternity. it&lsquo;s for great minutes, minor achievements,
-          and in the middle between.
-        </p>
-        <Button
-          variant="outline"
-          className="border-black text-black px-8  hover:bg-black hover:text-white bg-transparent transition"
-        >
-          Shop Now →
-        </Button>
       </div>
     </motion.section>
   );
